@@ -10,9 +10,9 @@ public class Profesor extends Persona{
     }
 
     public Materia getMateria() {
+        if (materia==null) return null;
         return materia;
     }
-
     public void setMateria(Materia materia) {
         this.materia = materia;
     }
@@ -26,4 +26,5 @@ public class Profesor extends Persona{
                 "Materia: " +materia.getNombre()+"\n"
                 );
         }
+
 }
