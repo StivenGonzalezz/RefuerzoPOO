@@ -33,7 +33,7 @@ public static void menu(){
         );
         System.out.println(opc);
 
-        // DEPENDIENDO DE LA OPCION ELEGIDA ANTERIORMENTE EN EL MENU GENERAL SE MUESRA EL MENU ADMIN O MENU ESTUDIANTE
+        // DEPENDIENDO DE LA OPCION ELEGIDA ANTERIORMENTE EN EL MENU GENERAL SE MUESTRA EL MENU ADMIN O MENU ESTUDIANTE
         switch (opc){
             case 1:
                 String clave = JOptionPane.showInputDialog(null, "ingrese la contraseña");
@@ -88,7 +88,7 @@ public static void menu(){
 
             switch (opcAdmin){
                 case 1:
-
+                    registrarEstudiante();
                     break;
 
                 case 2:
@@ -108,12 +108,15 @@ public static void menu(){
                     break;
 
                 case 6:
+                    Materia.CerrarNotas();
                     break;
 
                 case 7:
+                    Materia.AgregarEstudianteAlCurso();
                     break;
 
                 case 8:
+                    Materia.EliminarEstudianteDelCurso();
                     break;
 
                 case 9:JOptionPane.showMessageDialog(null, "Volviendo al menu principal . . .");
@@ -124,6 +127,15 @@ public static void menu(){
     }
 
     //-------- OPCIONES DEL MENU ADMINISTRATIVO ------
+
+    //Método para registrar un nuevo estudiante.
+    private static void registrarEstudiante() {
+        String nombres = input("ingrese el nombre del estudiante");
+        String apellidos = input("ingrese los apellidos del estudiante");
+        int id = Integer.parseInt(input("ingrese el id del estudiante"));
+        int edad= Integer.parseInt(input("Ingrese la edad del estudiante"));
+        estudiantes.add(new Estudiante(nombres, apellidos, id, edad));
+    }
     private static void registrarProfesor() {
         String nombres = input("ingrese el nombre del profesor");
         String apellidos = input("ingrese los apellidos del profesor");

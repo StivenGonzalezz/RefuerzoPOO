@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class Estudiante extends Persona{
 
     int edad;
-    int[] notas = new int[5];
+    double[] notas;
     ArrayList<Materia> materiasRegistradas = new ArrayList<Materia>();
 
     public Estudiante(String nombres, String apellidos, int id, int edad){
@@ -20,11 +20,11 @@ public class Estudiante extends Persona{
         this.edad = edad;
     }
 
-    public int[] getNotas() {
+    public double[] getNotas() {
         return notas;
     }
 
-    public void setNotas(int[] notas) {
+    public void setNotas(double[] notas) {
         this.notas = notas;
     }
 
@@ -45,6 +45,41 @@ public class Estudiante extends Persona{
                 "Edad: " +edad+"\n"
         );
         return null;
+    }
+
+    // Método para verificar si el estudiante tiene calificación en todas las notas
+    public boolean tieneCalificacion() {
+        if (notas == null) {
+            return false;
+        }
+
+        for (double calificacion : notas) {
+            if (calificacion == 0.0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    // Método para asignar una calificación a un estudiante
+    public void asignarCalificacion(double calificacion) {
+        if (notas == null) {
+            notas = new double[4];
+        }
+        // Verifica que la calificación esté en el rango de 0.0 a 5.0
+        if (calificacion >= 0.0 && calificacion <= 5.0) {
+            for (int i = 0; i < notas.length; i++) {
+                if (notas[i] == 0.0) {
+                    notas[i] = calificacion;
+                    JOptionPane.showMessageDialog(null, "Calificación asignada: " + calificacion);
+                    return;
+                }
+            }
+            JOptionPane.showMessageDialog(null, "El estudiante ya tiene todas las calificaciones asignadas.");
+        } else {
+            JOptionPane.showMessageDialog(null, "La calificación debe estar en el rango de 0.0 a 5.0.");
+        }
     }
 
 }
