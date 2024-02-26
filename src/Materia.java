@@ -70,9 +70,9 @@ public class Materia{
         // Verifica si la materia está abierta y la capacidad no ha sido alcanzada
         if (estado && estudiantesRegistrados.size() < capacidad) {
             estudiantesRegistrados.add(estudiante);
-            JOptionPane.showMessageDialog(null, "Estudiante agregado a la materia: " + estudiante.getNombres());
+            Main.output("Estudiante agregado a la materia: " + estudiante.getNombres());
         } else {
-            JOptionPane.showMessageDialog(null, "No se puede agregar mas estudiantes a la materia.");
+            Main.output("No se puede agregar mas estudiantes a la materia.");
         }
     }
 
@@ -80,9 +80,9 @@ public class Materia{
      public void EliminarEstudianteDelCurso(Estudiante estudiante) {
         if (estudiantesRegistrados != null && estudiantesRegistrados.contains(estudiante)) {
             estudiantesRegistrados.remove(estudiante);
-            JOptionPane.showMessageDialog(null, "Estudiante eliminado de la materia: " + estudiante.getNombres());
+            Main.output("Estudiante eliminado de la materia: " + estudiante.getNombres());
         } else {
-            JOptionPane.showMessageDialog(null, "El estudiante no esta registrado en esta materia.");
+            Main.output("El estudiante no esta registrado en esta materia.");
         }
     }
 
@@ -97,9 +97,9 @@ public class Materia{
             }
 
             estado = false;
-            System.out.println("Notas del curso cerradas correctamente.");
+            Main.output("Notas del curso cerradas correctamente.");
         } else {
-            System.out.println("No hay estudiantes registrados en esta materia.");
+            Main.output("No hay estudiantes registrados en esta materia.");
         }
     }
 }
