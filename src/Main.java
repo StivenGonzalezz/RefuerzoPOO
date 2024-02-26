@@ -108,19 +108,36 @@ public static void menu(){
                     break;
 
                 case 6:
-                    Materia.CerrarNotas();
-                    break;
+                if (!materias.isEmpty()) {
+                    Materia materiaACerrarNotas = materias.get(0);
+                    cerrarNotas(materiaACerrarNotas);
+                } else {
+                    output("No hay materias disponibles para cerrar notas.");
+                }
+                break;
 
                 case 7:
-                    Materia.AgregarEstudianteAlCurso();
-                    break;
+                if (!materias.isEmpty()) {
+                    Materia materiaAAgregarEstudiante = materias.get(0);
+                    Estudiante estudianteAAgregar = ; 
+                    agregarEstudianteAlCurso(materiaAAgregarEstudiante, estudianteAAgregar);
+                } else {
+                    output("No hay materias disponibles para agregar estudiantes.");
+                }
+                break;
 
                 case 8:
-                    Materia.EliminarEstudianteDelCurso();
-                    break;
+                if (!materias.isEmpty()) {
+                    Materia materiaAEliminarEstudiante = materias.get(0);
+                    Estudiante estudianteAEliminar = ;
+                    eliminarEstudianteDelCurso(materiaAEliminarEstudiante, estudianteAEliminar);
+                } else {
+                    output("No hay materias disponibles para eliminar estudiantes.");
+                }
+                break;
 
                 case 9:JOptionPane.showMessageDialog(null, "Volviendo al menu principal . . .");
-
+                    break;
             }
         }while (opcAdmin != 9);
 
@@ -216,6 +233,38 @@ public static void menu(){
             if (materia.getNombre().equals(nombre)) materiaEncontrada = materia;
         }
         return  materiaEncontrada;
+    }
+
+    private static void cerrarNotas(Materia materia) {
+        if (materia != null && !materia.getEstudiantesRegistrados().isEmpty()) {
+            for (Estudiante estudiante : materia.getEstudiantesRegistrados()) {
+                if (!estudiante.tieneCalificacion()) {
+                    estudiante.asignarCalificacion(0.0);
+                }
+            }
+            materia.setEstado(false);
+            output("Notas del curso cerradas correctamente.");
+        } else {
+            output("No hay estudiantes registrados en esta materia.");
+        }
+    }
+
+    private static void eliminarEstudianteDelCurso(Materia materia, Estudiante estudiante) {
+        if (materia != null && materia.getEstudiantesRegistrados() != null && materia.getEstudiantesRegistrados().contains(estudiante)) {
+            materia.getEstudiantesRegistrados().remove(estudiante);
+            output("Estudiante eliminado de la materia: " + estudiante.getNombres());
+        } else {
+            output("El estudiante no está registrado en esta materia.");
+        }
+    }
+
+    private static void agregarEstudianteAlCurso(Materia materia, Estudiante estudiante) {
+        if (materia != null) {
+            materia.getEstudiantesRegistrados().add(estudiante);
+            output("Estudiante agregado a la materia: " + estudiante.getNombres());
+        } else {
+            output("La materia no está disponible.");
+        }
     }
 
     //-----------METODOS JOPTION PARA ACOSTAR EL CODIGO--------
