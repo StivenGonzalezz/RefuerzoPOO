@@ -176,12 +176,21 @@ public static void menu(){
     private static void agregarNotas() {
         int id = Integer.parseInt(input("ingrese el id del profesor que desea ingresar notas"));
         Profesor profesor = buscarProfesor(id);
-        if (profesor!=null) & profesor.getMateria() != null{
-
-        }
-
-
+        if (profesor!=null & profesor.getMateria() != null){
+            int idEstudiante = Integer.parseInt(input("Ingrese el id del estudiante al cual deasea ingresar las notas"));
+            Estudiante estudiante = buscarEstudiante(idEstudiante);
+            if (estudiante != null & estudiante.getMateriasRegistradas().contains(profesor.getMateria())){
+                double[] notas = new double[4];
+                for(int i = 1 ; i < 5 ; i++){
+                    notas[i-1] = Double.parseDouble(input(("ingrese la nota " + i)));
+                }
+                estudiante.setNotas(notas);
+                estudiante.getNotas();
+            }else output("El estudiante no ha sido encontrado en la lista de estudiantes registrados en la materia");
+        }else output("el profesor ingresado no existe o no tiene una materia asignada");
     }
+
+
 
     //---------METODOS PARA BUSCAR -------------------
     private static Profesor buscarProfesor(int id) {

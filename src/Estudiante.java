@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class Estudiante extends Persona{
 
     int edad;
-    int[] notas = new int[5];
+    double[] notas;
     ArrayList<Materia> materiasRegistradas = new ArrayList<Materia>();
 
     public Estudiante(String nombres, String apellidos, int id, int edad){
@@ -20,11 +20,21 @@ public class Estudiante extends Persona{
         this.edad = edad;
     }
 
-    public int[] getNotas() {
-        return notas;
+    public void getNotas() {
+        JOptionPane.showMessageDialog(null,"    NOTAS\n\n" +
+                "Nota 1: "+ notas[0]+"\n"+
+                "Nota 2: "+ notas[1]+"\n"+
+                "Nota 3: "+ notas[2]+"\n"+
+                "Nota 4: "+ notas[3]);
+                getDefinitiva();
     }
 
-    public void setNotas(int[] notas) {
+    public void getDefinitiva(){
+        double def = (notas[0] + notas[1] + notas[2] + notas[3]);
+        JOptionPane.showMessageDialog (null,"nota definitiva: "+ def);
+    }
+
+    public void setNotas(double[] notas) {
         this.notas = notas;
     }
 
