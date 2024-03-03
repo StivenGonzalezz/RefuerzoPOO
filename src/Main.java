@@ -117,9 +117,11 @@ public static void menu(){
                 break;
 
                 case 7:
-                if (!materias.isEmpty()) {
+                String nombreMateria = input("Ingrese el nombre de la materia a la cual quiere agregar el estudiante: ");
+                int idEstAgregar = Integer.parseInt(input("Ingrese el número de identificacion del estudiante a agregar: "));
+                if (!materias.isEmpty() && buscarMateria(nombreMateria) != null && buscarEstudiante(idEstAgregar) != null) {
                     Materia materiaAAgregarEstudiante = materias.get(0);
-                    Estudiante estudianteAAgregar = ; 
+                    Estudiante estudianteAAgregar = buscarEstudiante(idEstAgregar); 
                     agregarEstudianteAlCurso(materiaAAgregarEstudiante, estudianteAAgregar);
                 } else {
                     output("No hay materias disponibles para agregar estudiantes.");
@@ -127,9 +129,11 @@ public static void menu(){
                 break;
 
                 case 8:
-                if (!materias.isEmpty()) {
+                String nombreMateriaE = input("Ingrese el nombre de la materia de la cual quiere eliminar el estudiante: ");
+                int idEstEliminar = Integer.parseInt(input("Ingrese el número de identificacion del estudiante a eliminar: "));
+                if (!materias.isEmpty() && buscarMateria(nombreMateriaE) != null && buscarEstudiante(idEstEliminar) != null) {
                     Materia materiaAEliminarEstudiante = materias.get(0);
-                    Estudiante estudianteAEliminar = ;
+                    Estudiante estudianteAEliminar = buscarEstudiante(idEstEliminar);
                     eliminarEstudianteDelCurso(materiaAEliminarEstudiante, estudianteAEliminar);
                 } else {
                     output("No hay materias disponibles para eliminar estudiantes.");
@@ -208,8 +212,6 @@ public static void menu(){
         if (profesor!=null) & profesor.getMateria() != null{
 
         }
-
-
     }
 
     //---------METODOS PARA BUSCAR -------------------
