@@ -15,7 +15,7 @@ public class Main {
         estudiantes.add(new Estudiante("mauricio","quintero",2,32));
         profesores.add(new Profesor("carlos","marin",10,new Materia("castellano",20, true, true)));
         profesores.add(new Profesor("pedro","londoño",11,null));
-        materias.add(new Materia("ingles", 5, true, false));
+        materias.add(new Materia("ingles", 1, true, false));
         menu();
 
     }
@@ -31,7 +31,6 @@ public static void menu(){
         "3. Salir\n\n"+
         "------------------------------------------------------")
         );
-        System.out.println(opc);
 
         // DEPENDIENDO DE LA OPCION ELEGIDA ANTERIORMENTE EN EL MENU GENERAL SE MUESTRA EL MENU ADMIN O MENU ESTUDIANTE
         switch (opc){
@@ -39,10 +38,6 @@ public static void menu(){
                 String clave = JOptionPane.showInputDialog(null, "ingrese la contraseña");
                 String claveAdmin = "0000";
                 String mensaje;
-
-                //
-                //clave==claveAdmin?menuAdministrativo(): mensajeError();
-                //JOptionPane.showMessageDialog(null,mensaje);
 
                 // VALIDA QUE LA CLAVE INGRESADA SEA LA CORRECTA Y EN CASO DE SER ASI MUESTRA EL MENU ADMIN
                 if(Objects.equals(clave, claveAdmin)){
@@ -65,7 +60,11 @@ public static void menu(){
 }
 
     private static void menuEstudiante() {
-        String id = JOptionPane.showInputDialog(null, "Ingrese su numero de indentificacion");
+        int id = Integer.parseInt(input( "Ingrese su numero de indentificacion"));
+        Estudiante estudiante = buscarEstudiante(id);
+        if (estudiante!=null){
+            estudiante.info();
+        }else output("El estudiante digitado no ha sido encontrado");
     }
 
     //     FUCION QUE MUESTRA EL MENU ADMINISTRATIVO  Y DA OPCIONES POSIBLES
@@ -108,36 +107,15 @@ public static void menu(){
                     break;
 
                 case 6:
-                if (!materias.isEmpty()) {
-                    Materia materiaACerrarNotas = materias.get(0);
-                    cerrarNotas(materiaACerrarNotas);
-                } else {
-                    output("No hay materias disponibles para cerrar notas.");
-                }
+                    cerrarNotas();
                 break;
 
                 case 7:
-                String nombreMateria = input("Ingrese el nombre de la materia a la cual quiere agregar el estudiante: ");
-                int idEstAgregar = Integer.parseInt(input("Ingrese el número de identificacion del estudiante a agregar: "));
-                if (!materias.isEmpty() && buscarMateria(nombreMateria) != null && buscarEstudiante(idEstAgregar) != null) {
-                    Materia materiaAAgregarEstudiante = materias.get(0);
-                    Estudiante estudianteAAgregar = buscarEstudiante(idEstAgregar); 
-                    agregarEstudianteAlCurso(materiaAAgregarEstudiante, estudianteAAgregar);
-                } else {
-                    output("No hay materias disponibles para agregar estudiantes.");
-                }
+                    agregarEstudiante();
                 break;
 
                 case 8:
-                String nombreMateriaE = input("Ingrese el nombre de la materia de la cual quiere eliminar el estudiante: ");
-                int idEstEliminar = Integer.parseInt(input("Ingrese el número de identificacion del estudiante a eliminar: "));
-                if (!materias.isEmpty() && buscarMateria(nombreMateriaE) != null && buscarEstudiante(idEstEliminar) != null) {
-                    Materia materiaAEliminarEstudiante = materias.get(0);
-                    Estudiante estudianteAEliminar = buscarEstudiante(idEstEliminar);
-                    eliminarEstudianteDelCurso(materiaAEliminarEstudiante, estudianteAEliminar);
-                } else {
-                    output("No hay materias disponibles para eliminar estudiantes.");
-                }
+                    eliminarEstudiante();
                 break;
 
                 case 9:JOptionPane.showMessageDialog(null, "Volviendo al menu principal . . .");
@@ -147,16 +125,17 @@ public static void menu(){
 
     }
 
+
     //-------- OPCIONES DEL MENU ADMINISTRATIVO ------
 
-    //Método para registrar un nuevo estudiante.
+    //Métodos del menu administrativo
     private static void registrarEstudiante() {
         String nombres = input("ingrese el nombre del estudiante");
         String apellidos = input("ingrese los apellidos del estudiante");
         int id = Integer.parseInt(input("ingrese el id del estudiante"));
         int edad= Integer.parseInt(input("Ingrese la edad del estudiante"));
         estudiantes.add(new Estudiante(nombres, apellidos, id, edad));
-    }
+    }                                                   //punto 1
     private static void registrarProfesor() {
         String nombres = input("ingrese el nombre del profesor");
         String apellidos = input("ingrese los apellidos del profesor");
@@ -170,7 +149,7 @@ public static void menu(){
             output("la materia no ha sido encontrada, no se asignara materia al profesor");
             profesores.add(new Profesor(nombres, apellidos, id, null));
         }
-    }
+    }                                                     //punto 2
     private static void crearCurso() {
         String nombreMateria = input( "Ingrese el nombre de la materia");
         int capacidadMateria = Integer.parseInt(input( "ingrese el cupo maximo de la materia"));
@@ -186,12 +165,12 @@ public static void menu(){
             output( "Curso creado con profesor a cargo");
             profesorACargo.setMateria(m);
         } else {
-            input("           Curso creado sin profesor a cargo\n\n" +
+            output("           Curso creado sin profesor a cargo\n\n" +
                     "esto es debido a que:\n"+
                     "   *El profesor decretado ya tiene un curso asignado\n" +
-                    "   *El id proporcioado no esta registrado");
+                    "   *El id proporcionado no esta registrado");
         }
-    }
+    }                                                            //punto 3
     private static void vincularProfesorAMateria() {
         String materiaABuscar = input("ingrese le nombre de la maeria al cual desea asignar un docente");
         Materia materia = buscarMateria(materiaABuscar);
@@ -205,14 +184,56 @@ public static void menu(){
             profesor.info();
         }else output("Alguno de los datos bridados no ha sido digitado correctamente, verifique su informacion");
 
-    }
+    }                                              //punto 4
     private static void agregarNotas() {
-        int id = Integer.parseInt(input("ingrese el id del profesor que desea ingresar notas"));
-        Profesor profesor = buscarProfesor(id);
-        if (profesor!=null) & profesor.getMateria() != null{
 
+    }                                                             //punto 5
+    private static void cerrarNotas() {
+        String materiaACerrar = input("ingrese el nombre de la materia el cual desea cerrar");
+        Materia materia = buscarMateria(materiaACerrar);
+        if (materiaACerrar!=null){
+            materia.setEstado(false);
+            output("Materia " + materia.getNombre() + " fue cerrada correctamente");
+        }else output("La materia que desea cerrar no esta creada");
+    }                                                           //punto 6
+    private static void agregarEstudiante() {
+        String nombreMateria = input("Ingrese el nombre de la materia a la cual quiere agregar el estudiante: ");
+        int idEstAgregar = Integer.parseInt(input("Ingrese el número de identificacion del estudiante a agregar: "));
+        if (!materias.isEmpty() && buscarMateria(nombreMateria) != null && buscarEstudiante(idEstAgregar) != null) {
+            Materia materiaAAgregarEstudiante = materias.get(0);
+            Estudiante estudianteAAgregar = buscarEstudiante(idEstAgregar);
+            agregarEstudianteAlCurso(materiaAAgregarEstudiante, estudianteAAgregar);
+        } else {
+            output("No hay materias disponibles para agregar estudiantes.");
         }
-    }
+    }                                                     //punto 7
+    private static void agregarEstudianteAlCurso(Materia materia, Estudiante estudiante) {
+        if (materia != null & materia.getCapacidad()>materia.getEstudiantesRegistrados().size()) {
+            materia.getEstudiantesRegistrados().add(estudiante);
+            output("Estudiante " + estudiante.getNombres()+ " agregado a la materia " + materia.getNombre());
+        } else {
+            output("La materia elegida no cuenta con cupos disponibles");
+        }
+    }        //punto 7
+    private static void eliminarEstudiante(){
+        String nombreMateriaE = input("Ingrese el nombre de la materia de la cual quiere eliminar el estudiante: ");
+        int idEstEliminar = Integer.parseInt(input("Ingrese el número de identificacion del estudiante a eliminar: "));
+        if (!materias.isEmpty() && buscarMateria(nombreMateriaE) != null && buscarEstudiante(idEstEliminar) != null) {
+            Materia materiaAEliminarEstudiante = materias.get(0);
+            Estudiante estudianteAEliminar = buscarEstudiante(idEstEliminar);
+            eliminarEstudianteDelCurso(materiaAEliminarEstudiante, estudianteAEliminar);
+        } else {
+            output("No hay materias disponibles para eliminar estudiantes.");
+        }
+    }                                                     //punto 8
+    private static void eliminarEstudianteDelCurso(Materia materia, Estudiante estudiante) {
+        if (materia != null && materia.getEstudiantesRegistrados() != null && materia.getEstudiantesRegistrados().contains(estudiante)) {
+            materia.getEstudiantesRegistrados().remove(estudiante);
+            output("Estudiante " + estudiante.getNombres()+ " eliminado de la materia " + materia.getNombre());
+        } else {
+            output("El estudiante no está registrado en esta materia.");
+        }
+    }      //punto 8
 
     //---------METODOS PARA BUSCAR -------------------
     private static Profesor buscarProfesor(int id) {
@@ -235,38 +256,6 @@ public static void menu(){
             if (materia.getNombre().equals(nombre)) materiaEncontrada = materia;
         }
         return  materiaEncontrada;
-    }
-
-    private static void cerrarNotas(Materia materia) {
-        if (materia != null && !materia.getEstudiantesRegistrados().isEmpty()) {
-            for (Estudiante estudiante : materia.getEstudiantesRegistrados()) {
-                if (!estudiante.tieneCalificacion()) {
-                    estudiante.asignarCalificacion(0.0);
-                }
-            }
-            materia.setEstado(false);
-            output("Notas del curso cerradas correctamente.");
-        } else {
-            output("No hay estudiantes registrados en esta materia.");
-        }
-    }
-
-    private static void eliminarEstudianteDelCurso(Materia materia, Estudiante estudiante) {
-        if (materia != null && materia.getEstudiantesRegistrados() != null && materia.getEstudiantesRegistrados().contains(estudiante)) {
-            materia.getEstudiantesRegistrados().remove(estudiante);
-            output("Estudiante eliminado de la materia: " + estudiante.getNombres());
-        } else {
-            output("El estudiante no está registrado en esta materia.");
-        }
-    }
-
-    private static void agregarEstudianteAlCurso(Materia materia, Estudiante estudiante) {
-        if (materia != null) {
-            materia.getEstudiantesRegistrados().add(estudiante);
-            output("Estudiante agregado a la materia: " + estudiante.getNombres());
-        } else {
-            output("La materia no está disponible.");
-        }
     }
 
     //-----------METODOS JOPTION PARA ACOSTAR EL CODIGO--------

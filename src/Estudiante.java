@@ -36,15 +36,14 @@ public class Estudiante extends Persona{
         this.materiasRegistradas = materiasRegistradas;
     }
 
-    public Object info() {
-
+    public void info() {
         JOptionPane.showMessageDialog(null, "   INFORMACION   \n" +
                 "Nombres: " + nombres+"\n"+
                 "Apellidos: " + apellidos+"\n"+
                 "Identificacion: " + id+"\n"+
-                "Edad: " +edad+"\n"
+                "Edad: " +edad+"\n"+
+                "Materias registradas: "+getMateriasRegistradas().size()
         );
-        return null;
     }
 
     // Método para verificar si el estudiante tiene calificación en todas las notas

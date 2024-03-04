@@ -12,8 +12,6 @@ public class Materia{
 
     //----------- CONSTRUCTOR -------------------------------------
 
-
-
     public Materia(String nombre, int capacidad, boolean estado, boolean asignado) {
         this.nombre = nombre;
         this.capacidad = capacidad;
